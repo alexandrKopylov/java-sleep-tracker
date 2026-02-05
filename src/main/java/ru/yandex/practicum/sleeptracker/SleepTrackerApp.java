@@ -20,7 +20,7 @@ public class SleepTrackerApp {
     public static final String SEPARATOR = ";";
     private static final DateTimeFormatter LOG_TIME_FORMATTER =
             DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
-    private final List<Function<List<SleepingSession>, SleepAnalysisResult>> ANALYTIC_FUNCTION = List.of(
+    private final List<Function<List<SleepingSession>, SleepAnalysisResult>> analyticFunction = List.of(
             new SleepingSessionCount(),
             new CountSessionsQualityBad(),
             new MinSessionDuration(),
@@ -43,7 +43,7 @@ public class SleepTrackerApp {
     }
 
     private List<SleepAnalysisResult> analyzeSession(List<SleepingSession> sessions) {
-        return ANALYTIC_FUNCTION.stream()
+        return analyticFunction.stream()
                 .map(it -> it.apply(sessions))
                 .toList();
     }
