@@ -10,12 +10,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CountSleeplessNightsTest {
-
+public class CountSleeplessNightsTest {
     private CountSleeplessNights counter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         counter = new CountSleeplessNights();
     }
 
@@ -24,7 +23,7 @@ class CountSleeplessNightsTest {
      * Ожидаемый результат: 5 − число ночей со сном = количество бессонных.
      */
     @Test
-    void apply_withSeveralNightSessions_shouldCalculateCorrectly() {
+    public void apply_withSeveralNightSessions_shouldCalculateCorrectly() {
         // Сессии охватывают период с 01.10.25 по 06.10.25 → 5 ночей (01–02, 02–03, 03–04, 04–05, 05–06)
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
@@ -43,9 +42,7 @@ class CountSleeplessNightsTest {
         ); // ночь 04–05 (начало до 12:00 следующего дня)
 
         List<SleepingSession> sessions = List.of(session1, session2, session3);
-
         SleepAnalysisResult result = counter.apply(sessions);
-
         assertEquals("Колличество бессонных ночей", result.getFunctionTitle());
         assertEquals(1L, result.getResult());  // 5 ночей всего − 3 ночи со сном = 2 бессонные
     }
@@ -55,7 +52,7 @@ class CountSleeplessNightsTest {
      * Ожидаемый результат: все ночи в периоде считаются бессонными.
      */
     @Test
-    void apply_onlyDaytimeSessions_shouldCountAllNightsAsSleepless() {
+    public void apply_onlyDaytimeSessions_shouldCountAllNightsAsSleepless() {
         SleepingSession daySession1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 14, 0),
                 LocalDateTime.of(2025, 10, 1, 15, 30),
@@ -68,9 +65,7 @@ class CountSleeplessNightsTest {
         );
 
         List<SleepingSession> sessions = List.of(daySession1, daySession2);
-
         SleepAnalysisResult result = counter.apply(sessions);
-
         assertEquals("Колличество бессонных ночей", result.getFunctionTitle());
         assertEquals(2L, result.getResult());  // период: 01.10–03.10 → 2 ночи (01–02, 02–03)
     }
@@ -80,7 +75,7 @@ class CountSleeplessNightsTest {
      * Ожидаемый результат: 0 бессонных ночей (вся ночь со сном).
      */
     @Test
-    void apply_singleNightSession_shouldReturnZeroSleepless() {
+    public void apply_singleNightSession_shouldReturnZeroSleepless() {
         SleepingSession nightSession = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
                 LocalDateTime.of(2025, 10, 2, 7, 30),
@@ -88,9 +83,7 @@ class CountSleeplessNightsTest {
         ); // ночь 01–02
 
         List<SleepingSession> sessions = List.of(nightSession);
-
         SleepAnalysisResult result = counter.apply(sessions);
-
         assertEquals("Колличество бессонных ночей", result.getFunctionTitle());
         assertEquals(0L, result.getResult());  // 1 ночь всего − 1 ночь со сном = 0
     }
@@ -100,7 +93,7 @@ class CountSleeplessNightsTest {
      * Ожидаемый результат: учитывает все ночи между первой и последней датой.
      */
     @Test
-    void apply_spannedPeriodWithGaps_shouldCountGapsAsSleepless() {
+    public void apply_spannedPeriodWithGaps_shouldCountGapsAsSleepless() {
         // Период: 01.10.25 – 10.10.25 → 9 ночей (01–02, ..., 09–10)
         SleepingSession first = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 0),

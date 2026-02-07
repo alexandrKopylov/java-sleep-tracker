@@ -11,12 +11,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SleepingSessionCountTest {
-
+public class SleepingSessionCountTest {
     private SleepingSessionCount sessionCounter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         sessionCounter = new SleepingSessionCount();
     }
 
@@ -25,7 +24,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: общее количество сессий (независимо от качества и длительности).
      */
     @Test
-    void apply_multipleSessions_shouldReturnTotalCount() {
+    public void apply_multipleSessions_shouldReturnTotalCount() {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
                 LocalDateTime.of(2025, 10, 2, 7, 30),
@@ -41,11 +40,8 @@ class SleepingSessionCountTest {
                 LocalDateTime.of(2025, 10, 4, 8, 0),
                 SleepQuality.NORMAL
         );
-
         List<SleepingSession> sessions = List.of(session1, session2, session3);
-
         SleepAnalysisResult result = sessionCounter.apply(sessions);
-
         assertEquals("общее количество сессий сна", result.getFunctionTitle());
         assertEquals(3, result.getResult());
     }
@@ -55,7 +51,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: 1.
      */
     @Test
-    void apply_singleSession_shouldReturnOne() {
+    public void apply_singleSession_shouldReturnOne() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 5, 0, 10),
                 LocalDateTime.of(2025, 10, 5, 6, 20),
@@ -72,7 +68,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: 0.
      */
     @Test
-    void apply_emptyList_shouldReturnZero() {
+    public void apply_emptyList_shouldReturnZero() {
         List<SleepingSession> sessions = List.of();
         SleepAnalysisResult result = sessionCounter.apply(sessions);
         assertEquals("общее количество сессий сна", result.getFunctionTitle());
@@ -84,7 +80,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: подсчёт всех сессий, независимо от качества.
      */
     @Test
-    void apply_allGoodSessions_shouldCountAll() {
+    public void apply_allGoodSessions_shouldCountAll() {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 22, 0),
                 LocalDateTime.of(2025, 10, 2, 6, 0),
@@ -95,12 +91,8 @@ class SleepingSessionCountTest {
                 LocalDateTime.of(2025, 10, 3, 7, 0),
                 SleepQuality.GOOD
         );
-
         List<SleepingSession> sessions = List.of(session1, session2);
-
         SleepAnalysisResult result = sessionCounter.apply(sessions);
-
-
         assertEquals("общее количество сессий сна", result.getFunctionTitle());
         assertEquals(2, result.getResult());
     }
@@ -110,7 +102,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: сумма всех сессий, качество не влияет на подсчёт.
      */
     @Test
-    void apply_mixedQualitySessions_shouldCountAll() {
+    public void apply_mixedQualitySessions_shouldCountAll() {
         SleepingSession goodSession = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 0),
                 LocalDateTime.of(2025, 10, 2, 7, 0),
@@ -126,11 +118,8 @@ class SleepingSessionCountTest {
                 LocalDateTime.of(2025, 10, 5, 5, 30),
                 SleepQuality.NORMAL
         );
-
         List<SleepingSession> sessions = List.of(goodSession, badSession, normalSession);
-
         SleepAnalysisResult result = sessionCounter.apply(sessions);
-
         assertEquals("общее количество сессий сна", result.getFunctionTitle());
         assertEquals(3, result.getResult());
     }
@@ -140,7 +129,7 @@ class SleepingSessionCountTest {
      * Ожидаемый результат: учитываются все сессии, независимо от времени суток.
      */
     @Test
-    void apply_dayAndNightSessions_shouldCountAll() {
+    public void apply_dayAndNightSessions_shouldCountAll() {
         // Ночная сессия
         SleepingSession nightSession = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 0),
@@ -153,11 +142,8 @@ class SleepingSessionCountTest {
                 LocalDateTime.of(2025, 10, 2, 16, 0),
                 SleepQuality.NORMAL
         );
-
         List<SleepingSession> sessions = List.of(nightSession, daySession);
-
         SleepAnalysisResult result = sessionCounter.apply(sessions);
-
         assertEquals("общее количество сессий сна", result.getFunctionTitle());
         assertEquals(2, result.getResult());
     }

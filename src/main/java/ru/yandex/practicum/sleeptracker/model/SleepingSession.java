@@ -3,12 +3,10 @@ package ru.yandex.practicum.sleeptracker.model;
 import java.time.LocalDateTime;
 
 public class SleepingSession {
-
     private final LocalDateTime start;
     private final LocalDateTime end;
     private final SleepQuality quality;
     private final Chronotype chronotype;
-
 
     public SleepingSession(LocalDateTime start, LocalDateTime end, SleepQuality quality) {
         this.start = start;
@@ -51,7 +49,6 @@ public class SleepingSession {
     public boolean isNightSleep() {
         LocalDateTime edgeLeft = end.toLocalDate().atTime(0, 0);
         LocalDateTime edgeRight = end.toLocalDate().atTime(6, 0);
-
         if ((start.isBefore(edgeLeft) && end.isAfter(edgeRight)) || (start.isAfter(edgeLeft) && end.isBefore(edgeRight))) {
             return true;
         } else if (start.isBefore(edgeLeft) && (end.isAfter(edgeLeft) && end.isBefore(edgeRight))) {

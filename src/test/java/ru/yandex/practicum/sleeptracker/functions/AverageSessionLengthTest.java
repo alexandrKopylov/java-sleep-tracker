@@ -11,18 +11,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AverageSessionLengthTest {
-
+public class AverageSessionLengthTest {
     private AverageSessionLength averageSessionLength;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         averageSessionLength = new AverageSessionLength();
     }
 
     @Test
-    void apply_normalSessions_shouldReturnCorrectAverage() {
-
+    public void apply_normalSessions_shouldReturnCorrectAverage() {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
                 LocalDateTime.of(2025, 10, 2, 7, 30),
@@ -49,7 +47,7 @@ class AverageSessionLengthTest {
     }
 
     @Test
-    void apply_singleSession_shouldReturnItsDuration() {
+    public void apply_singleSession_shouldReturnItsDuration() {
         SleepingSession session = new SleepingSession(
                 LocalDateTime.of(2025, 10, 5, 0, 10),
                 LocalDateTime.of(2025, 10, 5, 6, 20),

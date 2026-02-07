@@ -11,12 +11,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CountSessionsQualityBadTest {
-
+public class CountSessionsQualityBadTest {
     private CountSessionsQualityBad counter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         counter = new CountSessionsQualityBad();
     }
 
@@ -25,7 +24,7 @@ class CountSessionsQualityBadTest {
      * Ожидаемый результат: подсчёт всех BAD-сессий.
      */
     @Test
-    void apply_hasBadSessions_shouldCountAllBad() {
+    public void apply_hasBadSessions_shouldCountAllBad() {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
                 LocalDateTime.of(2025, 10, 2, 7, 30),
@@ -46,9 +45,7 @@ class CountSessionsQualityBadTest {
                 LocalDateTime.of(2025, 10, 5, 6, 20),
                 SleepQuality.NORMAL
         );
-
         List<SleepingSession> sessions = List.of(session1, session2, session3, session4);
-
         SleepAnalysisResult result = counter.apply(sessions);
         assertEquals("Колличество сесий сна c плохим качеством", result.getFunctionTitle());
         assertEquals(2L, result.getResult());  // session2 и session3 — BAD
@@ -59,7 +56,7 @@ class CountSessionsQualityBadTest {
      * Ожидаемый результат: 0.
      */
     @Test
-    void apply_noBadSessions_shouldReturnZero() {
+    public void apply_noBadSessions_shouldReturnZero() {
         SleepingSession session1 = new SleepingSession(
                 LocalDateTime.of(2025, 10, 1, 23, 15),
                 LocalDateTime.of(2025, 10, 2, 7, 30),
@@ -70,11 +67,8 @@ class CountSessionsQualityBadTest {
                 LocalDateTime.of(2025, 10, 3, 6, 40),
                 SleepQuality.NORMAL
         );
-
         List<SleepingSession> sessions = List.of(session1, session2);
-
         SleepAnalysisResult result = counter.apply(sessions);
-
         assertEquals("Колличество сесий сна c плохим качеством", result.getFunctionTitle());
         assertEquals(0L, result.getResult());
     }
